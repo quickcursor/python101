@@ -1,5 +1,6 @@
 #banking app!
 import time
+import random
 print('Welcome to QWERTY Bank! What would you like to do?')
 print('You have to create an account. In an account, you start with $1000.' )
 print('Every year, we will update your account with our interest.Your current interest rate per year is 9%.')
@@ -20,14 +21,15 @@ while True:
         print('You have been locked out!')
         while account1 > 0:
             account1 -= 1
-            time.sleep(1)
-            print('$' + str(account1))
+            time.sleep(0.05)
+            print('Updated balance: $' + str(account1))
     if advance == 10:
         print('You advance 1 year!')
         extra = account1 * (1 + interest_rate)
         extra = int(extra)
         print('Updated Balance: ' + str(extra))
         account1 = extra
+        advance = 0
     option = int(input('Choose your option: '))
     if option == 3:
         break
@@ -50,17 +52,19 @@ while True:
                 print('Wrong!')
                 wrong += 1
     elif option == 1:
-        check = int(input('Please enter your PIN: '))
-        if check == PIN:
-            print('Correct! You may pass.')
-        else:
-            print('Wrong!')
-            wrong += 1
+        while wrong < 3:
+            check = int(input('Please enter your PIN: '))
+            if check == PIN:
+                print('Correct! You may pass.')
+            else:
+                print('Wrong!')
+                wrong += 1
+                break
+            deposit = int(input('Enter Deposit Amount: '))
+            account1 += deposit
+            print('Updated Balance: ' + str(account1))
+            advance += 1
             break
-        deposit = int(input('Enter Deposit Amount: '))
-        account1 += deposit
-        print('Updated Balance: ' + str(account1))
-        advance += 1
     elif option == 4:
         import random
         PIN = random.randint(100000, 999999)
@@ -92,22 +96,25 @@ while True:
                     print('Congratulations! You win $15')
                     print('Your interest rate per year has increased by 0.01%')
                     account1 += 15
+                    interest_rate += 0.01
                     print('Updated amount: $' + str(account1))
                     break
                 elif guesses == 2:
                     print('Congratulations! You win $10')
                     account1 += 10
+                    interest_rate += 0.01
                     print('Updated amount: $' + str(account1))
                     break
                 elif guesses == 3:
                     print('Congratulations! You get $5!')
                     account1 += 5
+                    interest_rate += 0.01
                     print('Updated amount: $' + str(account1))
                     break
                 else:
                     print('Sorry! Better luck next time!')
                     print('Your interest rate per year has decreased by 0.01%')
-                    interest_rate -= 0.1
+                    interest_rate -= 0.01
                 break
             elif guess < 1 or guess > 10:
                 print('Invalid Guess')
